@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Búsqueda de Contacos en la Agenda</title>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script type="text/javascript" charset="utf-8">
+	document.addEventListener("deviceready", onDeviceReady, false);
+	function onDeviceReady(){
+		var options = new ContactFindOptions();
+		options.filter = prompt("Compañia:");
+		options.multiple = true;
+		filter = ["organizations"];
+		navigator.contacts.find(filter, onSuccess, onError, options);
+	}
+	
+	function onSuccess(contacts){
+		var myresults = document.getElementById('results');
+		var string = "";
+		for (var i=0; i<contacts.length; i++){
+			for (var j=0; j<contacts[i].organizations.length; j++){
+				string += 'Nombre: ' + contacts[i].displayName + '<br />' +
+				'Compañia: ' + contacts[i].organizations[j].name + '<br />' +
+				'Cargo: ' + contacts[i].organizations[j].title;
+ 			}
+ 			string += '<br /><br />';
+		}
+		myresults.innerHTML = string;
+		alert(contacts[i].displayName);
+	}
+	
+	function onError(contactError) {
+		alert('Ha ocurrido un error!');
+	}
+	
+</script>
+</head>
+<body>
+	<h1>Contactos</h1>
+	<div id="results">Buscando...</div>
+</body>
+</html>
